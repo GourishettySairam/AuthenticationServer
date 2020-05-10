@@ -3,6 +3,8 @@ const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const loginRouter = require('./routes/loginRouter')
+
 const hostname = 'localhost';
 const port = 3000;
 
@@ -15,16 +17,11 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 // bcz we need to extract the json string present in request header
 
+app.use('/login',loginRouter)
+// Mounting login end point
 
-app.post('/login',(req,res)=>{
-  console.log(req.body.username);
-  console.log(req.body.password);
-  res.write('login successful<br>');
-  res.end('Welcome ' + req.body.username);
-})
-app.get('/login/:id', (req,res)=>{
-  res.end('your id is ' + req.params.id);
-})
+app.use('/login/:id',loginRouter)
+
 
 app.use(express.static(__dirname + '/public'));
 // static is used to serve static files stored in public directory
