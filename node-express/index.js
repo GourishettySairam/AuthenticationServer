@@ -16,15 +16,25 @@ app.use(bodyParser.json());
 // bcz we need to extract the json string present in request header
 
 
+app.post('/login',(req,res)=>{
+  console.log(req.body.username);
+  console.log(req.body.password);
+  res.write('login successful<br>');
+  res.end('Welcome ' + req.body.username);
+})
+app.get('/login/:id', (req,res)=>{
+  res.end('your id is ' + req.params.id);
+})
+
 app.use(express.static(__dirname + '/public'));
 // static is used to serve static files stored in public directory
 
-// If folders in public folder are not requested then the below code gets executed and msg is displayed
 app.use((req,res,next)=>{
   res.statusCode = 200;
   res.setHeader('Content-Type','text/html');
   res.end('<html><body>This is an express server</body></html>');
 });
+// If folders in public folder are not requested then the above code gets executed and msg is displayed
 
 
 const server = http.createServer(app);
