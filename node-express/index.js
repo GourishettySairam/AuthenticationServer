@@ -1,18 +1,25 @@
 const express = require('express');
 const http = require('http');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 const hostname = 'localhost';
 const port = 3000;
 
 const app = express();
+// to specify a middleware we use app.use
+
 app.use(morgan('dev'));
-# morgan is used for logging information onto the console
+// morgan is used for logging information onto the console
+
+app.use(bodyParser.json());
+// bcz we need to extract the json string present in request header
+
 
 app.use(express.static(__dirname + '/public'));
-# static is used to serve static files stored in public directory
+// static is used to serve static files stored in public directory
 
-# If folders in public folder are not requested then the below code gets executed and msg is displayed
+// If folders in public folder are not requested then the below code gets executed and msg is displayed
 app.use((req,res,next)=>{
   res.statusCode = 200;
   res.setHeader('Content-Type','text/html');
